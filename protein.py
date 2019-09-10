@@ -21,6 +21,12 @@ import matplotlib.pyplot as plt
 def get_dist(coord1, coord2):
     return math.sqrt((coord1[0]-coord2[0])**2+(coord1[1]-coord2[1])**2+(coord1[2]-coord2[2])**2)
 
+def size_dist(cliques):
+    freq_arr = [0,0,0,0,0,0,0]
+    for i in cliques:
+        freq_arr[len(i)] += 1
+    return freq_arr
+
 class Protein:
     def __init__(self, name, file_path):
         self.name = name
@@ -61,25 +67,28 @@ class Protein:
 
     def get_cliques(self, clique_type, exclude_backbone=False, distance_cutoff=6):
         if clique_type == "centroid":
-            if self.centroid_cliques == None:
+            if self.centroid_cliques is None:
                 self.generate_cliques("centroid", exclude_backbone=exclude_backbone, distance_cutoff=distance_cutoff)
             return self.centroid_cliques
         elif clique_type == "atom":
-            if self.atom_cliques == None:
+            if self.atom_cliques is None:
                 self.generate_cliques("atom", exclude_backbone=exclude_backbone, distance_cutoff=distance_cutoff)
-            return self.atom_cliques
+                return self.atom_cliques
+            else:
+                return self.atom_cliques
+        
         else: raise Exception("invalid clique type")
 
     #def get_dist_cutoff(self):
     #    return self.distance_cutoff
-
+    
     def get_clique_frequency(self, clique_type):
         if clique_type == "centroid":
-            if self.centroid_clique_frequency == None:
+            if self.centroid_clique_frequency is None:
                 self.freq_analysis("centroid")
             return self.centroid_clique_frequency
         elif clique_type == "atom":
-            if self.atom_clique_frequency == None:
+            if self.atom_clique_frequency is None:
                 self.freq_analysis("atom")
             return self.atom_clique_frequency
         else: raise Exception("invalid clique type")
@@ -217,6 +226,6 @@ class Protein:
         
 
     
-protein = Protein("4quv", "C:\\alpha\\4quv.pdb")
+#protein = Protein("4quv", "C:\\alpha\\4quv.pdb")
 #print(protein.centroid_cliques[0][1].get_centroid())
 
