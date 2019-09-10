@@ -31,8 +31,8 @@ class Residue:
         return tuple(COM)
 
     def get_centroid(self):
-        if self.centroid == None
-        self.centroid = self.get_COM
+        if self.centroid == None:
+            self.centroid = self.get_COM
         return self.centroid
 
     def add_atom(self, atm):
