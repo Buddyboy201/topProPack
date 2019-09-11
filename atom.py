@@ -1,5 +1,5 @@
 from mendeleev import element
-
+import re
 
 element_mass = {} # why is this needed?
 class Atom:
@@ -12,7 +12,15 @@ class Atom:
             element_mass[self.symbol] = element(self.symbol).atomic_weight
             # why would element mass be zero, but atomic_weight be fine?
         self.atomic_mass = element_mass[self.symbol]
+        m = re.search(r'CA$|C$|N$|O$|', self.name)
+        if m.group(0) != "":
+            self.mcsc = 'mc'
+        else:
+            self.mcsc = 'sc' 
         
+    def get_mcsc(self):
+        return self.mcsc
+    
     def get_symbol(self):
         return self.symbol
 
